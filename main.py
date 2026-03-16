@@ -4,7 +4,7 @@ from logger import log_state, log_event # type: ignore
 from player import Player # type: ignore
 from asteroid import Asteroid # type: ignore
 from asteroidfield import AsteroidField # type: ignore
-
+import sys
 
 
  
@@ -42,6 +42,13 @@ def main():
             sprite.update(dt)
         for sprite in drawable:
             sprite.draw(screen)
+
+        for sprite in asteroids:
+            if player.collides_with(sprite):
+                log_event("player_hit")
+                print("game over")
+                sys.exit()
+
 
         pygame.display.flip()
         clock.tick(60)
