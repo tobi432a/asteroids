@@ -6,6 +6,7 @@ from asteroid import Asteroid # type: ignore
 from asteroidfield import AsteroidField # type: ignore
 from shot import Shot # type: ignore
 import sys
+from score import * # type: ignore
 
 
  
@@ -28,6 +29,7 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
     
     asteroidfield = AsteroidField()
 
@@ -47,7 +49,7 @@ def main():
             sprite.update(dt)
         for sprite in drawable:
             sprite.draw(screen)
-
+        draw_score(screen)
         for sprite in asteroids:
             for shot in shots:
                 if shot.collides_with(sprite):
@@ -59,7 +61,7 @@ def main():
                 print("game over")
                 sys.exit()
 
-
+ 
         pygame.display.flip()
         clock.tick(60)
         dt = clock.get_time() / 1000.0
