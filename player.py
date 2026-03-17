@@ -19,7 +19,7 @@ class Player(CircleShape):
         return [a, b, c]
 
     def draw(self, screen):
-        pygame.draw.polygon(screen, "white", self.triangle(), width=LINE_WIDTH)
+        pygame.draw.polygon(screen, "light blue", self.triangle(), width=LINE_WIDTH)
     
     def rotate(self, dt):
         keys = pygame.key.get_pressed()

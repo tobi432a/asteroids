@@ -15,3 +15,7 @@ def update_score(points):
 def draw_score(screen):
     score_text = font.render(f"Score: {score}", True, "Purple")
     screen.blit(score_text, (textx, texty))
+
+def reset_score():
+    global score
+    score = 0

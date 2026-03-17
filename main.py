@@ -59,12 +59,58 @@ def main():
             if player.collides_with(sprite):
                 log_event("player_hit")
                 print("game over")
-                sys.exit()
+                show_game_over(screen)
+
 
  
         pygame.display.flip()
         clock.tick(60)
         dt = clock.get_time() / 1000.0
 
+def show_game_over(screen):
+    font = pygame.font.SysFont(None, 74)
+    text = font.render("Game Over", True, "white")
+    text_rect = text.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
+    screen.blit(text, text_rect)
+    pygame.display.flip()
+    pygame.time.wait(3000)
+    show_reset_prompt(screen)
+    count_down_till_game_closing()
+
+def reset_button_pressed():
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+            return True
+    return False
+
+def count_down_till_game_closing():
+    screen = pygame.display.get_surface()
+    font = pygame.font.SysFont(None, 50)
+    for i in range(10, 0, -1):
+        text = font.render(f"Closing in {i}...", True, "white")
+        text_rect = text.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 50))
+        screen.blit(text, text_rect)
+        pygame.display.flip()
+        pygame.time.wait(1000)
+        text_gets_cleared(screen, text_rect)
+        if reset_button_pressed():
+            reset_score()
+            main()
+
+    sys.exit()
+
+def text_gets_cleared(screen, text_rect):
+    pygame.draw.rect(screen, "black", text_rect)
+    pygame.display.flip()
+
+def show_reset_prompt(screen):
+    font = pygame.font.SysFont(None, 50)
+    text = font.render("Hold R to reset or wait to close", True, "white")
+    text_rect = text.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 100))
+    screen.blit(text, text_rect)
+    pygame.display.flip()
+
 if __name__ == "__main__":
+
     main()
+    
